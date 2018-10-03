@@ -22,6 +22,8 @@ export class AuthStore extends EntityStore<AuthState, Auth> {
   login(user: User) {
     /** In real life, you will abstract this to service. */
     localStorage.setItem('user', JSON.stringify(user));
+    // should be able to use this.update(), but I can't; left
+    // a comment on the Medium post asking about this
     this.updateRoot({ user });
   }
 
