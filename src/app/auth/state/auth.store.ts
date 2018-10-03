@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { EntityState, Store, StoreConfig } from '@datorama/akita';
 import { Auth } from './auth.model';
 import { User } from '../models/user';
 
@@ -13,7 +13,7 @@ export const initialState: AuthState = {
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'auth' })
-export class AuthStore extends EntityStore<AuthState, Auth> {
+export class AuthStore extends Store<AuthState> {
 
   constructor() {
     super(initialState);
@@ -24,13 +24,13 @@ export class AuthStore extends EntityStore<AuthState, Auth> {
     localStorage.setItem('user', JSON.stringify(user));
     // should be able to use this.update(), but I can't; left
     // a comment on the Medium post asking about this
-    this.updateRoot({ user });
+    this.update({ user });
   }
 
   logout() {
     /** In real life, you will abstract this to service. */
     localStorage.removeItem('user');
-    this.updateRoot(initialState);
+    this.update(initialState);
   }
 
 }
